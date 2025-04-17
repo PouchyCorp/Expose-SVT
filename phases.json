@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Introduction",
+        "background": "intro.png",
+        "type": "dialogue",
+        "link": "intro_dialogue"
+    },
+    {
+        "name": "First Minigame",
+        "background": "minigame1.png",
+        "type": "minigame",
+        "link": "minigame1_config"
+    },
+    {
+        "name": "Transition Scene",
+        "background": "transition.png",
+        "type": "transition",
+        "link": "transition_dialogue"
+    },
+    {
+        "name": "Final Minigame",
+        "background": "minigame2.png",
+        "type": "minigame",
+        "link": "minigame2_config"
+    },
+    {
+        "name": "Ending",
+        "background": "ending.png",
+        "type": "dialogue",
+        "link": "ending_dialogue"
+    }
+]
