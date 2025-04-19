@@ -27,7 +27,7 @@ class PhaseManager:
             print(f"Unknown phase type: {phase_type}")
 
         self.current_phase_index += 1
-        return True  # Phase processed successfully
+        return phase_type  # Phase processed successfully
 
     def handle_dialogue(self, dialogue_id):
         dialogue = self.dialogues.get(dialogue_id, [])
