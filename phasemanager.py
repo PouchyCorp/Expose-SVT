@@ -7,15 +7,16 @@ class PhaseManager:
         self.dialogues = load_json_file(dialogues_file)
         self.minigame_configs = load_json_file(minigame_configs)
         self.screen = screen
-        self.current_phase_index = 0
+        self.current_phase_index = -1  # Start before the first phase
         self.init_new_phase = init_new_phase
         self.current_phase = self.phases[self.current_phase_index]
 
     def start_phase(self):
-        if self.current_phase_index >= len(self.phases):
-            return False  # No more phases to process
 
         self.current_phase_index += 1
+
+        if self.current_phase_index >= len(self.phases):
+            return False  # No more phases to process
 
         self.current_phase = self.phases[self.current_phase_index]
 

@@ -1,6 +1,6 @@
-[
-    {
-        "id": "minigame1_config",
+{
+    "minigame1" : {
+        "id": "_config",
         "title": "Basic Math Quiz",
         "questions": [
             {
@@ -15,7 +15,7 @@
             }
         ]
     },
-    {
+    "minigame2" : {
         "id": "minigame2_config",
         "title": "General Knowledge Quiz",
         "questions": [
@@ -31,4 +31,4 @@
             }
         ]
     }
-]
+}

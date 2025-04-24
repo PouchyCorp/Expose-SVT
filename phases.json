@@ -1,42 +1,42 @@
 [
     {
         "name": "Introduction",
-        "background": "intro.png",
+        "background": "placeholderbackground.png",
         "type": "dialogue",
         "link": "intro_dialogue"
     },
     {
         "name": "First Minigame",
-        "background": "minigame1.png",
+        "background": "placeholderbackground2.png",
         "type": "minigame",
-        "link": "minigame1_config"
+        "link": "minigame1"
     },
     {
         "name": "Transition Scene",
-        "background": "transition.png",
+        "background": "placeholderbackground.png",
         "text" : "Placeholder text",
         "type": "transition",
         "link": "transition_dialogue"
     },
     {
         "name": "Final Minigame",
-        "background": "minigame2.png",
+        "background": "placeholderbackground2.png",
         "type": "minigame",
-        "link": "minigame2_config"
+        "link": "minigame2"
     },
     {
         "name": "Ending",
-        "background": "ending.png",
+        "background": "placeholderbackground.png",
         "type": "dialogue",
-        "character": "OwO",
+        "character": "Jouvelot",
         "documents": [
             {
                 "name": "Placeholder",
-                "link": "Placeholder1.png"
+                "link": "placeholderdocument.png"
             },
             {
                 "name": "Placeholder",
-                "link": "Placeholder2.png"
+                "link": "placeholderdocument.png"
             }
         ],
         "link": "ending_dialogue"

@@ -42,6 +42,9 @@ class Game:
             minigame_configs="minigameconfig.json",
             screen=screen,
             init_new_phase= self.init_new_phase)
+        
+        self.phase_manager.start_phase()
+        # Placeholder for the background
     
     def update(self):
         """handles animations and updates the game state"""
@@ -76,7 +79,7 @@ class Game:
                 '''handle transition interaction'''
             case 'dialogue':
                 self.dialogue.click_interaction()
-                if self.dialogue.is_on_last_part():
+                if self.dialogue.is_finished():
                     transition(self.screen, self.background, self.phase_manager.start_phase())
                 
             case 'end':
@@ -110,18 +113,18 @@ class Game:
                 if event.type == pg.QUIT:
                     running = False
 
+                if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+                    self.handle_click()
             
-            self.screen.fill("black")
-            if not self.phase_manager.start_phase():
-                running = False  # Exit loop when all phases are completed
-
+            self.update()
+            self.draw()
             pg.display.flip()
 
 
 
 if __name__ == "__main__":
     pg.init()
-    screen = pg.display.set_mode((800, 600))
+    screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
     game = Game(screen)
     game.run()
     pg.quit()
