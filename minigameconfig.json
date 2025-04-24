@@ -1,34 +1,12 @@
 {
     "minigame1" : {
-        "id": "_config",
-        "title": "Basic Math Quiz",
-        "questions": [
-            {
-                "question": "What is 2 + 2?",
-                "choices": ["3", "4", "5"],
-                "correct_choice": 1
-            },
-            {
-                "question": "What is 5 * 3?",
-                "choices": ["15", "10", "20"],
-                "correct_choice": 0
-            }
-        ]
+        "question": "What is 2 + 2?",
+        "options": ["3", "4", "5"],
+        "correct_answer_ind": 1
     },
     "minigame2" : {
-        "id": "minigame2_config",
-        "title": "General Knowledge Quiz",
-        "questions": [
-            {
-                "question": "What is the capital of France?",
-                "choices": ["Berlin", "Madrid", "Paris"],
-                "correct_choice": 2
-            },
-            {
-                "question": "Which planet is known as the Red Planet?",
-                "choices": ["Earth", "Mars", "Jupiter"],
-                "correct_choice": 1
-            }
-        ]
+        "question": "What is the capital of France?",
+        "options": ["Berlin", "Madrid", "Paris"],
+        "correct_answer_ind": 2
     }
 }

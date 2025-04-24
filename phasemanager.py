@@ -15,9 +15,6 @@ class PhaseManager:
 
         self.current_phase_index += 1
 
-        if self.current_phase_index >= len(self.phases):
-            return False  # No more phases to process
-
         self.current_phase = self.phases[self.current_phase_index]
 
         match self.current_phase['type']:
@@ -46,5 +43,12 @@ class PhaseManager:
                     'text'  : self.current_phase.get('text', ''),
                 }
                 self.init_new_phase(transition_info)
+            
+            case 'end':
+                end_info = {
+                    'type': 'end',
+                    'background': load_image(self.current_phase['background']),
+                }
+                self.init_new_phase(end_info)
 
         return load_image(self.current_phase['background'])  # Phase processed successfully

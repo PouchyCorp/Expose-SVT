@@ -1,6 +1,7 @@
 import pygame as pg
 from phasemanager import PhaseManager
 from math import pi, sin
+from qcm import QCM
 
 from dialogue import Dialogue
 
@@ -36,15 +37,13 @@ class Game:
     def __init__(self, screen):
         self.screen : pg.Surface = screen 
         self.state = 'start'
+        self.background = pg.Surface((screen.get_width(), screen.get_height()))
         self.phase_manager = PhaseManager(
             phases_file="phases.json",
             dialogues_file="dialogues.json",
             minigame_configs="minigameconfig.json",
             screen=screen,
             init_new_phase= self.init_new_phase)
-        
-        self.phase_manager.start_phase()
-        # Placeholder for the background
     
     def update(self):
         """handles animations and updates the game state"""
@@ -58,8 +57,13 @@ class Game:
         """draws the game elements on the screen"""
         self.screen.blit(self.background, (0, 0))
         match self.state:
+            case 'start':
+                '''draw start elements'''
+                #TODO draw start text if any
+                #TODO draw start button if any
             case 'minigame':
                 '''draw minigame elements'''
+                self.minigame.draw(self.screen)
             case 'transition':
                 '''draw transition elements'''
                 # draw transition text if any
@@ -68,30 +72,35 @@ class Game:
                 
 
     
-    def handle_click(self):
+    def handle_click(self, event):
         """handles user input"""
         match self.state:
             case 'start':
                 transition(self.screen, self.background, self.phase_manager.start_phase())
             case 'minigame':
                 '''handle minigame interaction'''
+                if self.minigame.handle_event(event):
+                    transition(self.screen, self.background, self.phase_manager.start_phase(), 0.5)
             case 'transition':
                 '''handle transition interaction'''
+                transition(self.screen, self.background, self.phase_manager.start_phase())
             case 'dialogue':
                 self.dialogue.click_interaction()
                 if self.dialogue.is_finished():
-                    transition(self.screen, self.background, self.phase_manager.start_phase())
-                
+                    transition(self.screen, self.background, self.phase_manager.start_phase(), 1)
+                    self.dialogue.reset()
             case 'end':
                 self.phase_manager.current_phase_index = 0
                 self.state = 'start'
                 transition(self.screen, self.background, pg.Surface((1920, 1080)), time=4)
     
     def init_new_phase(self, phase_info):
+        print(self.phase_manager.current_phase_index)
         match phase_info['type']:
             case 'minigame':
                 self.state = 'minigame'
                 self.background = phase_info['background']
+                self.minigame = QCM(phase_info['minigame']['question'], phase_info['minigame']['options'], phase_info['minigame']['correct_answer_ind'])
                 # Initialize minigame with phase_info
             case 'transition':
                 self.state = 'transition'
@@ -103,6 +112,11 @@ class Game:
                 self.dialogue = Dialogue(phase_info['dialogue'], phase_info['character'], phase_info['documents'])
                 self.background = phase_info['background']
                 # Initialize dialogue with phase_info
+            case 'end':
+                print('end')
+                self.state = 'end'
+                self.background = phase_info['background']
+                # Initialize end phase with phase_info
             case _:
                 raise ValueError(f"Unknown phase type: {phase_info['type']}")
 
@@ -114,7 +128,7 @@ class Game:
                     running = False
 
                 if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                    self.handle_click()
+                    self.handle_click(event)
             
             self.update()
             self.draw()

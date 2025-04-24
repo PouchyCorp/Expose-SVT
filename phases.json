@@ -40,5 +40,9 @@
             }
         ],
         "link": "ending_dialogue"
+    },
+    {
+        "type": "end",
+        "background": "placeholderbackground.png"
     }
 ]

@@ -84,16 +84,16 @@ class Dialogue:
         """
         Reset the dialogue to the beginning.
         """
-        self.anim_chars = ""
         self.current_dialogue_part = self.textes[0]
-        self.bliting_list = []
+        self.char_count = 0
+        self.segmented_text = [''] * (len(self.current_dialogue_part) // MAX_LINE_SIZE + 1)
         self.part_ind = 0
     
     def draw(self, screen: pg.Surface):
         """
         Draw the dialogue and bot animation on the screen.
         """
-        screen.blit(pg.Surface((0,0), pg.SRCALPHA), (300 + 46 * 6, 750))  # Draw the background TODO: Replace with actual background image
+        screen.blit(pg.Surface((0,0), pg.SRCALPHA), (300 + 46 * 6, 750))  #TODO: Replace with actual background image
 
         for i, surf in enumerate(self.bliting_list[-5:]):
             line_height = 812 + 27 * i  # Calculate the line height
