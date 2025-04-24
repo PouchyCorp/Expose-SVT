@@ -44,6 +44,7 @@ class Game:
             minigame_configs="minigameconfig.json",
             screen=screen,
             init_new_phase= self.init_new_phase)
+        self.game_over = False
     
     def update(self):
         """handles animations and updates the game state"""
@@ -90,9 +91,8 @@ class Game:
                     transition(self.screen, self.background, self.phase_manager.start_phase(), 1)
                     self.dialogue.reset()
             case 'end':
-                self.phase_manager.current_phase_index = 0
-                self.state = 'start'
                 transition(self.screen, self.background, pg.Surface((1920, 1080)), time=4)
+                self.game_over = True
     
     def init_new_phase(self, phase_info):
         print(self.phase_manager.current_phase_index)
@@ -125,7 +125,8 @@ class Game:
         while running:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
-                    running = False
+                    from sys import exit
+                    exit()
 
                 if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                     self.handle_click(event)
@@ -134,12 +135,15 @@ class Game:
             self.draw()
             pg.display.flip()
 
+            if self.game_over:
+                running = False
+
 
 
 if __name__ == "__main__":
     pg.init()
     screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
-    game = Game(screen)
-    game.run()
-    pg.quit()
+    while True:
+        game = Game(screen)
+        game.run()
 

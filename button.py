@@ -34,5 +34,5 @@ class Button:
         # Blit the text.
 
         label_rect = self.name_surf.get_rect(center=self.rect.center)
-        self.surf.blit(self.name_surf, label_rect.topleft)
         win.blit(self.surf, self.rect)
+        win.blit(self.name_surf, label_rect.topleft)
