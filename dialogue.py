@@ -1,10 +1,11 @@
 import pygame as pg
 from fonts import DIALOGUE_FONT
+from file_loader import load_image
 
 MAX_LINE_SIZE = 40  # Maximum number of characters per line
 
 class Dialogue:
-    def __init__(self, text: list[str]):
+    def __init__(self, text: list[str], character = None, documents = []):
         """
         Initialize a Dialogue instance.
 
@@ -17,6 +18,25 @@ class Dialogue:
         self.current_dialogue_part = self.textes[self.part_ind]  # Current text to be shown
         self.page = 0  # Current page of the dialogue
         self.page_size = 5  # Number of lines per page
+
+        self.character_name = character  # Character associated with the dialogue\
+
+        match self.character_name:
+            case 'jouvelot':
+                self.character_sprite = load_image("jouvelot.png")
+            case _:
+                self.character_sprite = pg.Surface((0, 0), pg.SRCALPHA)  # Default to a transparent surface if character not found
+        
+        self.documents = self.init_documents(documents)  # Initialize documents
+
+    def init_documents(self, documents):
+        """
+        Initialize the documents for the dialogue.
+        """
+        document_sprites = []
+        for doc in documents:
+            document_sprites.append((load_image(doc['link']), doc['name']))  # Load each document and its name
+        return document_sprites
 
     def get_text_surf(self, txt):
         """
@@ -69,7 +89,7 @@ class Dialogue:
         """
         Draw the dialogue and bot animation on the screen.
         """
-        screen.blit(self.background, (300 + 46 * 6, 750))  # Draw the background
+        screen.blit(pg.Surface(), (300 + 46 * 6, 750))  # Draw the background
         for i, surf in enumerate(self.bliting_list):
             line_height = 812 + 27 * i  # Calculate the line height
             screen.blit(surf, (650, line_height))  # Draw each line of the dialogue

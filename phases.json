@@ -14,6 +14,7 @@
     {
         "name": "Transition Scene",
         "background": "transition.png",
+        "text" : "Placeholder text",
         "type": "transition",
         "link": "transition_dialogue"
     },
@@ -27,6 +28,17 @@
         "name": "Ending",
         "background": "ending.png",
         "type": "dialogue",
+        "character": "OwO",
+        "documents": [
+            {
+                "name": "Placeholder",
+                "link": "Placeholder1.png"
+            },
+            {
+                "name": "Placeholder",
+                "link": "Placeholder2.png"
+            }
+        ],
         "link": "ending_dialogue"
     }
 ]
