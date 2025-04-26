@@ -95,7 +95,6 @@ class Game:
                 self.game_over = True
     
     def init_new_phase(self, phase_info):
-        print(self.phase_manager.current_phase_index)
         match phase_info['type']:
             case 'minigame':
                 self.state = 'minigame'

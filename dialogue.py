@@ -2,7 +2,7 @@ import pygame as pg
 from fonts import DIALOGUE_FONT
 from file_loader import load_image
 
-MAX_LINE_SIZE = 40  # Maximum number of characters per line
+MAX_LINE_SIZE = 140  # Maximum number of characters per line
 PAGE_SIZE = 5  # Number of lines per page
 
 class Dialogue:
@@ -16,6 +16,7 @@ class Dialogue:
         self.bliting_list: list[pg.Surface] = []  # List of surfaces to be blitted
         self.part_ind = 0  # Index of the current part of the dialogue
         self.current_dialogue_part = self.textes[self.part_ind]  # Current text to be shown
+        self.parsed_dialogue_part = self.parse_text(self.current_dialogue_part)  # Parsed text to be shown
         self.page = 0  # Current page of the dialogue
         self.char_count = 0  # characters amount to be shown
         self.segmented_text = [''] * (len(self.current_dialogue_part) // MAX_LINE_SIZE + 1)  # Segmented text for the dialogue
@@ -25,9 +26,39 @@ class Dialogue:
             case 'Jouvelot':
                 self.character_sprite = load_image("placeholdercharacter.png")
             case _:
-                self.character_sprite = pg.Surface((0, 0), pg.SRCALPHA)  # Default to a transparent surface if character not found
+                self.character_sprite = pg.Surface((0, 0), pg.SRCALPHA)  # Default to8 a transparent surface if character not found
         
         self.documents = self.init_documents(documents)  # Initialize documents
+
+
+    def crop_parsed_text(self, parse_text : list[list[str, int]], start : int, stop) -> list[list[str, int]]:
+        """
+        Crop the parsed text to fit the size.
+        """
+        cropped_text = []
+        
+        stop -= start  # Adjust stop to account for the starting position
+
+        shortened_parse_text = []
+        for segment in parse_text:
+            if len(segment[0]) > start:
+                shortened_parse_text.append([segment[0][start:], segment[1]])
+                start = 0
+            elif start > 0:
+                start = start - len(segment[0])
+            else:
+                shortened_parse_text.append(segment)
+        
+        for segment in shortened_parse_text:
+            if len(segment[0]) > stop:
+                cropped_text.append([segment[0][:stop], segment[1]])
+                break
+            else:
+                cropped_text.append(segment)
+                stop -= len(segment[0])
+
+        return cropped_text
+            
 
     def init_documents(self, documents):
         """
@@ -38,20 +69,44 @@ class Dialogue:
             document_sprites.append((load_image(doc['link']), doc['name']))  # Load each document and its name
         return document_sprites
 
-    def get_text_surf(self, txt):
+    def get_text_surf(self, txt : list[list[str, int]]) -> pg.Surface:
         """
         Get the surface for the current text.
         """
-        return DIALOGUE_FONT.render(txt, False, 'green')
+
+        if len(txt) == 0:
+            return pg.Surface((0, 0), pg.SRCALPHA)
+
+        surf_list : list[pg.Surface]= []  # Create a transparent surface
+        for segment, segment_type in txt:
+            match segment_type:
+                case 0:  # Normal text
+                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'white'))
+                case 1:  # Bold text
+                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'yellow'))
+                case 2:  # Italic text
+                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'blue'))
+                case 3:  # Underlined text
+                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'red'))
+                case 4:  # Red text
+                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'purple'))
+                case _: # Default to normal text
+                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'white'))
+        
+        final_surf : pg.Surface = pg.Surface((sum([s.get_width() for s in surf_list]), 100), pg.SRCALPHA)  # Create a transparent surface
+        x = 0
+        for surf in surf_list:
+            final_surf.blit(surf, (x, 0))
+            x += surf.get_width()
+        return final_surf
 
     def update(self):
         """
         Update the dialogue animation.
         """
-        if self.char_count < len(self.current_dialogue_part): ## If there are remaining characters to be shown
-            self.segmented_text[self.char_count // MAX_LINE_SIZE] += self.current_dialogue_part[self.char_count]
+        if self.char_count <= len(self.current_dialogue_part): ## If there are remaining characters to be shown
+            self.segmented_text[self.char_count // MAX_LINE_SIZE] = self.crop_parsed_text(self.parsed_dialogue_part, (self.char_count // MAX_LINE_SIZE) * MAX_LINE_SIZE , self.char_count)
             self.char_count += 1  # Increment the character count
-
         
         self.bliting_list = []  # Reset bliting list
         for segment in self.segmented_text:
@@ -68,6 +123,29 @@ class Dialogue:
         Check if the dialogue is finished.
         """
         return True if self.is_on_last_part() and self.char_count >= len(self.current_dialogue_part) else False
+    
+    def parse_text(self, text):
+        parsed_text : list[list]= [['', 0]]  # List of tuples (text, status) 0: normal, 1: bold, 2: italic, 3: underline 
+        i = 0  # Index for the text
+        while i < len(text):
+            for sig, sig_ind in [('b', 1), ('i', 2), ('u', 3), ('r', 4)]:
+
+                if i < len(text)-1 and text[i] == '/' and text[i+1] == sig:
+                    i += 3  # Skip the esc characters ('/', sig, '/')
+                    parsed_text.append(['', sig_ind])  # Set status to bold
+                    while i < len(text)-1 and text[i] != '/':
+                        parsed_text[-1][0] += text[i]
+                        i += 1
+                    i += 1  # Skip the '/' character
+                    parsed_text.append(['', 0])
+                    break
+            
+            if i >= len(text)-1:
+                break
+            parsed_text[-1][0] += text[i]
+            i += 1
+        parsed_text = [segment for segment in parsed_text if segment[0] != '']  # Remove empty segments 
+        return parsed_text
 
     def skip_to_next_part(self):
         """
@@ -75,7 +153,8 @@ class Dialogue:
         """
         if not self.is_on_last_part() and self.char_count >= len(self.current_dialogue_part):  # If not on the last part and all characters are shown
             self.part_ind += 1
-            self.current_dialogue_part = self.textes[self.part_ind] # Change the text to be shown
+            self.current_dialogue_part = self.textes[self.part_ind]  # Current text to be shown
+            self.parsed_dialogue_part = self.parse_text(self.current_dialogue_part)  # Parsed text to be shown
             self.char_count = 0
             self.segmented_text = [''] * (len(self.current_dialogue_part) // MAX_LINE_SIZE + 1)
 
@@ -109,4 +188,7 @@ class Dialogue:
             self.skip_to_next_part()  # Skip to the next part of the dialogue
             return False
 
-    
+#parsing tests
+if __name__ == '__main__':
+    d = Dialogue([''])
+    print(d.crop_parsed_text(d.parse_text('Hello /b/World/ This is a test /i/italic/ text jhdqwbhjqwbdhjqwbdhjqw qwdqw.'), 1, 5))
