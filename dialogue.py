@@ -132,7 +132,7 @@ class Dialogue:
 
                 if i < len(text)-1 and text[i] == '/' and text[i+1] == sig:
                     i += 3  # Skip the esc characters ('/', sig, '/')
-                    parsed_text.append(['', sig_ind])  # Set status to bold
+                    parsed_text.append(['', sig_ind])
                     while i < len(text)-1 and text[i] != '/':
                         parsed_text[-1][0] += text[i]
                         i += 1
@@ -140,7 +140,7 @@ class Dialogue:
                     parsed_text.append(['', 0])
                     break
             
-            if i >= len(text)-1:
+            if i > len(text):
                 break
             parsed_text[-1][0] += text[i]
             i += 1
@@ -172,11 +172,11 @@ class Dialogue:
         """
         Draw the dialogue and bot animation on the screen.
         """
-        screen.blit(pg.Surface((0,0), pg.SRCALPHA), (300 + 46 * 6, 750))  #TODO: Replace with actual background image
+        screen.blit(pg.Surface((0,0), pg.SRCALPHA), (300, 750))  #TODO: Replace with actual background image
 
         for i, surf in enumerate(self.bliting_list[-5:]):
             line_height = 812 + 27 * i  # Calculate the line height
-            screen.blit(surf, (650, line_height))  # Draw each line of the dialogue
+            screen.blit(surf, (300, line_height))  # Draw each line of the dialogue
     
     def click_interaction(self) -> bool:
         """
@@ -191,4 +191,4 @@ class Dialogue:
 #parsing tests
 if __name__ == '__main__':
     d = Dialogue([''])
-    print(d.crop_parsed_text(d.parse_text('Hello /b/World/ This is a test /i/italic/ text jhdqwbhjqwbdhjqwbdhjqw qwdqw.'), 1, 5))
+    print(d.parse_text('Hello /b/World/ This is a test /i/italic/ text.'), 1, 5)

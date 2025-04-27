@@ -141,7 +141,7 @@ class Game:
 
 if __name__ == "__main__":
     pg.init()
-    screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
+    screen = pg.display.set_mode((1920,1080))
     while True:
         game = Game(screen)
         game.run()
