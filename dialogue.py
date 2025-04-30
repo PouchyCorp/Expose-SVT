@@ -1,5 +1,5 @@
 import pygame as pg
-from fonts import DIALOGUE_FONT
+from fonts import DIALOGUE_FONT, DIALOGUE_FONT_BOLD, DIALOGUE_FONT_ITALIC
 from file_loader import load_image
 
 MAX_LINE_SIZE = 140  # Maximum number of characters per line
@@ -78,20 +78,19 @@ class Dialogue:
             return pg.Surface((0, 0), pg.SRCALPHA)
 
         surf_list : list[pg.Surface]= []  # Create a transparent surface
+        font_color = 'white'  # Default font color
         for segment, segment_type in txt:
             match segment_type:
-                case 0:  # Normal text
-                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'white'))
                 case 1:  # Bold text
-                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'yellow'))
+                    surf_list.append(DIALOGUE_FONT_BOLD.render(segment, False, font_color))
                 case 2:  # Italic text
-                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'blue'))
-                case 3:  # Underlined text
+                    surf_list.append(DIALOGUE_FONT_ITALIC.render(segment, False, font_color))
+                case 3:  # Red text
                     surf_list.append(DIALOGUE_FONT.render(segment, False, 'red'))
-                case 4:  # Red text
-                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'purple'))
+                case 4:  # Blue text
+                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'blue'))
                 case _: # Default to normal text
-                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'white'))
+                    surf_list.append(DIALOGUE_FONT.render(segment, False, font_color))
         
         final_surf : pg.Surface = pg.Surface((sum([s.get_width() for s in surf_list]), 100), pg.SRCALPHA)  # Create a transparent surface
         x = 0
@@ -125,10 +124,10 @@ class Dialogue:
         return True if self.is_on_last_part() and self.char_count >= len(self.current_dialogue_part) else False
     
     def parse_text(self, text):
-        parsed_text : list[list]= [['', 0]]  # List of tuples (text, status) 0: normal, 1: bold, 2: italic, 3: underline 
+        parsed_text : list[list]= [['', 0]]  # List of tuples (text, status) 0: normal, 1: bold, 2: italic, 3: red, 4: blue 
         i = 0  # Index for the text
         while i < len(text):
-            for sig, sig_ind in [('b', 1), ('i', 2), ('u', 3), ('r', 4)]:
+            for sig, sig_ind in [('b', 1), ('i', 2), ('r', 3), ('b', 4)]:
 
                 if i < len(text)-1 and text[i] == '/' and text[i+1] == sig:
                     i += 3  # Skip the esc characters ('/', sig, '/')
