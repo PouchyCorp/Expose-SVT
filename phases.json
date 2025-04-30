@@ -2,6 +2,7 @@
     {
         "name": "Introduction",
         "background": "placeholderbackground.png",
+        "character": "Jouvelot",
         "type": "dialogue",
         "link": "intro_dialogue"
     },

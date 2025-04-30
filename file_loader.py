@@ -1,6 +1,6 @@
 import json
 import os
-from pygame import error, image
+from pygame import error, image, transform
 
 def load_json_file(filepath):
     if not os.path.exists(filepath):
@@ -20,3 +20,7 @@ def load_image(filepath):
         return image.load(filepath).convert_alpha()
     except error as e:
         raise ValueError(f"Error loading image from file: {filepath}") from e
+
+def load_and_resize_image(filepath):
+    image = load_image(filepath)
+    return transform.scale_by(image, 0.5)

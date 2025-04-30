@@ -1,6 +1,7 @@
 import pygame as pg
 from fonts import DIALOGUE_FONT, DIALOGUE_FONT_BOLD, DIALOGUE_FONT_ITALIC
-from file_loader import load_image
+from file_loader import load_and_resize_image, load_image
+from random import choice
 
 MAX_LINE_SIZE = 140  # Maximum number of characters per line
 PAGE_SIZE = 5  # Number of lines per page
@@ -24,9 +25,23 @@ class Dialogue:
 
         match self.character_name:
             case 'Jouvelot':
-                self.character_sprite = load_image("placeholdercharacter.png")
+                self.sprites_choices = [load_and_resize_image("jouvelot1.png"), load_and_resize_image("jouvelot2.png"), load_and_resize_image("jouvelot3.png"), load_and_resize_image("jouvelot4.png"), load_and_resize_image("jouvelot5.png")]
+            case 'Meteo':
+                self.sprites_choices = [load_and_resize_image("riche1.png"), load_and_resize_image("riche2.png"), load_and_resize_image("riche3.png"), load_and_resize_image("riche4.png")]
+            
+            case 'Climato':
+                self.sprites_choices = [load_and_resize_image("sdf1.png"), load_and_resize_image("sdf2.png"), load_and_resize_image("sdf3.png"), load_and_resize_image("sdf4.png")]
+            
+            case 'Villageois':
+                self.sprites_choices = [load_and_resize_image("pnj1.png"), load_and_resize_image("pnj2.png")]
+
+            case 'Pmurt':
+                self.sprites_choices = [load_and_resize_image("trump1.png"), load_and_resize_image("trump2.png"), load_and_resize_image("trump3.png")]
+
             case _:
-                self.character_sprite = pg.Surface((0, 0), pg.SRCALPHA)  # Default to8 a transparent surface if character not found
+                self.sprites_choices = [pg.Surface((0, 0), pg.SRCALPHA)]
+    
+        self.character_sprite = choice(self.sprites_choices)
         
         self.documents = self.init_documents(documents)  # Initialize documents
 
@@ -156,6 +171,7 @@ class Dialogue:
             self.parsed_dialogue_part = self.parse_text(self.current_dialogue_part)  # Parsed text to be shown
             self.char_count = 0
             self.segmented_text = [''] * (len(self.current_dialogue_part) // MAX_LINE_SIZE + 1)
+            self.character_sprite = choice(self.sprites_choices)
 
 
     def reset(self):
@@ -171,6 +187,10 @@ class Dialogue:
         """
         Draw the dialogue and bot animation on the screen.
         """
+
+        character_sprite_rect = self.character_sprite.get_rect(bottomleft=(0, 1080))
+        screen.blit(self.character_sprite, character_sprite_rect)
+
         screen.blit(pg.Surface((0,0), pg.SRCALPHA), (300, 750))  #TODO: Replace with actual background image
 
         for i, surf in enumerate(self.bliting_list[-5:]):
