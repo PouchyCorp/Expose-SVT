@@ -2,6 +2,7 @@ import pygame as pg
 from phasemanager import PhaseManager
 from math import pi, sin
 from qcm import QCM
+from button import Button
 
 from dialogue import Dialogue
 
@@ -45,6 +46,8 @@ class Game:
             screen=screen,
             init_new_phase= self.init_new_phase)
         self.game_over = False
+
+        self.start_button = Button('Commencer', (screen.get_width() // 2, screen.get_height() // 2), int, pg.Surface((200, 50)))
     
     def update(self):
         """handles animations and updates the game state"""
@@ -57,11 +60,11 @@ class Game:
     def draw(self):
         """draws the game elements on the screen"""
         self.screen.blit(self.background, (0, 0))
+        mouse_pos = pg.mouse.get_pos()
         match self.state:
             case 'start':
                 '''draw start elements'''
-                #TODO draw start text if any
-                #TODO draw start button if any
+                self.start_button.draw(self.screen, self.start_button.rect.collidepoint(mouse_pos))
             case 'minigame':
                 '''draw minigame elements'''
                 self.minigame.draw(self.screen)
@@ -72,12 +75,13 @@ class Game:
                 self.dialogue.draw(self.screen)
                 
 
-    
+
     def handle_click(self, event):
         """handles user input"""
         match self.state:
             case 'start':
-                transition(self.screen, self.background, self.phase_manager.start_phase())
+                if self.start_button.handle_event(event):
+                    transition(self.screen, self.background, self.phase_manager.start_phase())
             case 'minigame':
                 '''handle minigame interaction'''
                 if self.minigame.handle_event(event):
