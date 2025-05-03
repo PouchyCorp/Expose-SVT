@@ -2,7 +2,7 @@ from pygame import font
 font.init()
 
 font_path = "data/PxPlus_IBM_VGA8.ttf"
-font_size = 25
+font_size = 35
 
 DIALOGUE_FONT = font.Font("nimbus-sans-l.regular.otf", font_size)
 DIALOGUE_FONT_BOLD = font.Font("nimbus-sans-l.bold.otf", font_size)

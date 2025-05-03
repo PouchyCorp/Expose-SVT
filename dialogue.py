@@ -26,6 +26,7 @@ class Dialogue:
         match self.character_name:
             case 'Jouvelot':
                 self.sprites_choices = [load_and_resize_image("jouvelot1.png"), load_and_resize_image("jouvelot2.png"), load_and_resize_image("jouvelot3.png"), load_and_resize_image("jouvelot4.png"), load_and_resize_image("jouvelot5.png")]
+
             case 'Meteo':
                 self.sprites_choices = [load_and_resize_image("riche1.png"), load_and_resize_image("riche2.png"), load_and_resize_image("riche3.png"), load_and_resize_image("riche4.png")]
             
@@ -102,8 +103,6 @@ class Dialogue:
                     surf_list.append(DIALOGUE_FONT_ITALIC.render(segment, False, font_color))
                 case 3:  # Red text
                     surf_list.append(DIALOGUE_FONT.render(segment, False, 'red'))
-                case 4:  # Blue text
-                    surf_list.append(DIALOGUE_FONT.render(segment, False, 'blue'))
                 case _: # Default to normal text
                     surf_list.append(DIALOGUE_FONT.render(segment, False, font_color))
         
@@ -139,10 +138,10 @@ class Dialogue:
         return True if self.is_on_last_part() and self.char_count >= len(self.current_dialogue_part) else False
     
     def parse_text(self, text):
-        parsed_text : list[list]= [['', 0]]  # List of tuples (text, status) 0: normal, 1: bold, 2: italic, 3: red, 4: blue 
+        parsed_text : list[list]= [['', 0]]  # List of tuples (text, status) 0: normal, 1: bold, 2: italic, 3: red
         i = 0  # Index for the text
         while i < len(text):
-            for sig, sig_ind in [('b', 1), ('i', 2), ('r', 3), ('b', 4)]:
+            for sig, sig_ind in [('b', 1), ('i', 2), ('r', 3)]:
 
                 if i < len(text)-1 and text[i] == '/' and text[i+1] == sig:
                     i += 3  # Skip the esc characters ('/', sig, '/')
