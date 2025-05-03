@@ -1,10 +1,18 @@
+import sys, os
+
+if hasattr(sys, '_MEIPASS'):
+    # If the script is running as a bundled executable, change the working directory to the location of the executable
+    # This is necessary for loading resources correctly in a bundled application
+    # os.chdir(sys._MEIPASS) if hasattr(sys, '_MEIPASS') else None
+    os.chdir(sys._MEIPASS) 
+
 import pygame as pg
 from phasemanager import PhaseManager
 from math import pi, sin
 from qcm import QCM
 from button import Button
-
 from dialogue import Dialogue
+
 
 def transition(screen : pg.Surface, current_frame : pg.Surface, next_frame : pg.Surface, time : float = 2):
         """Simple fade-in-out transition between one frame to another, can be easily used at other places.  
