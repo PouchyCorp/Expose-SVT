@@ -1,9 +1,9 @@
 import pygame as pg
-from fonts import DIALOGUE_FONT, DIALOGUE_FONT_BOLD, DIALOGUE_FONT_ITALIC
+from fonts import DIALOGUE_FONT, DIALOGUE_FONT_BOLD, DIALOGUE_FONT_ITALIC, DESCRIPTION_FONT, BIG_FONT
 from file_loader import load_and_resize_image, load_image
 from random import choice
 
-MAX_LINE_SIZE = 140  # Maximum number of characters per line
+MAX_LINE_SIZE = 100  # Maximum number of characters per line
 PAGE_SIZE = 5  # Number of lines per page
 
 class Dialogue:
@@ -192,9 +192,18 @@ class Dialogue:
 
         screen.blit(pg.Surface((0,0), pg.SRCALPHA), (300, 750))  #TODO: Replace with actual background image
 
+        for i, doc in enumerate(self.documents):
+            doc_surf, doc_name = doc
+            doc_rect = doc_surf.get_rect(topright=(1820, 100))  # Position the document at the top left corner
+            screen.blit(doc_surf, doc_rect)
+            screen.blit(DESCRIPTION_FONT.render(doc_name, True, 'gray'), (doc_rect.bottomleft[0], doc_rect.bottomleft[1]+5))  # Draw the document name below the document
+
+        screen.blit(BIG_FONT.render(self.character_name, True, (200, 147, 42)), (200, 680))
+
+
         for i, surf in enumerate(self.bliting_list[-5:]):
-            line_height = 812 + 27 * i  # Calculate the line height
-            screen.blit(surf, (300, line_height))  # Draw each line of the dialogue
+            line_height = 812 + 30 * i  # Calculate the line height
+            screen.blit(surf, (225, line_height))  # Draw each line of the dialogue
     
     def click_interaction(self) -> bool:
         """

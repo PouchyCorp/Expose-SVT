@@ -132,8 +132,9 @@ class Game:
                 raise ValueError(f"Unknown phase type: {phase_info['type']}")
 
     def run(self):
-        running = True
-        while running:
+        clock = pg.time.Clock()
+        while not self.game_over:
+            clock.tick(60)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     from sys import exit
@@ -141,13 +142,17 @@ class Game:
 
                 if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                     self.handle_click(event)
+                
+                if event.type == pg.KEYDOWN and event.key == pg.K_d:
+                    print(str(pg.mouse.get_pos()))
             
             self.update()
             self.draw()
-            pg.display.flip()
 
-            if self.game_over:
-                running = False
+            font  = pg.font.SysFont('Arial', 30)
+            screen.blit(font.render(str(pg.mouse.get_pos()), True, (255, 255, 255)), (0,0))
+
+            pg.display.flip()
 
 
 

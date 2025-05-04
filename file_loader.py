@@ -2,25 +2,27 @@ import json
 import os
 from pygame import error, image, transform
 
+folder = 'assets/'
+
 def load_json_file(filepath):
-    if not os.path.exists(filepath):
+    if not os.path.exists(folder+filepath):
         raise FileNotFoundError(f"File not found: {filepath}")
     
-    with open(filepath, 'r', encoding='utf-8') as file:
+    with open(folder+filepath, 'r', encoding='utf-8') as file:
         try:
             return json.load(file)
         except json.JSONDecodeError as e:
             raise ValueError(f"Error decoding JSON from file: {filepath}") from e
         
 def load_image(filepath):
-    if not os.path.exists(filepath):
+    if not os.path.exists(folder+filepath):
         raise FileNotFoundError(f"Image file not found: {filepath}")
     
     try:
-        return image.load(filepath).convert_alpha()
+        return image.load(folder+filepath).convert_alpha()
     except error as e:
         raise ValueError(f"Error loading image from file: {filepath}") from e
 
 def load_and_resize_image(filepath):
     image = load_image(filepath)
-    return transform.scale_by(image, 0.5)
+    return transform.scale_by(image, 0.4)
