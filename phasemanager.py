@@ -1,5 +1,4 @@
 from file_loader import load_json_file, load_image
-from pygame import Surface, SRCALPHA
 
 class PhaseManager:
     def __init__(self, phases_file, dialogues_file, minigame_configs, screen, init_new_phase):

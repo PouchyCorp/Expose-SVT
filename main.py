@@ -1,9 +1,18 @@
+import sys, os
+
+if hasattr(sys, '_MEIPASS'):
+    # If the script is running as a bundled executable, change the working directory to the location of the executable
+    # This is necessary for loading resources correctly in a bundled application
+    # os.chdir(sys._MEIPASS) if hasattr(sys, '_MEIPASS') else None
+    os.chdir(sys._MEIPASS) 
+
 import pygame as pg
 from phasemanager import PhaseManager
 from math import pi, sin
 from qcm import QCM
-
+from button import Button
 from dialogue import Dialogue
+
 
 def transition(screen : pg.Surface, current_frame : pg.Surface, next_frame : pg.Surface, time : float = 2):
         """Simple fade-in-out transition between one frame to another, can be easily used at other places.  
@@ -45,6 +54,8 @@ class Game:
             screen=screen,
             init_new_phase= self.init_new_phase)
         self.game_over = False
+
+        self.start_button = Button('Commencer', (screen.get_width() // 2, screen.get_height() // 2), int, pg.Surface((200, 50)))
     
     def update(self):
         """handles animations and updates the game state"""
@@ -57,11 +68,11 @@ class Game:
     def draw(self):
         """draws the game elements on the screen"""
         self.screen.blit(self.background, (0, 0))
+        mouse_pos = pg.mouse.get_pos()
         match self.state:
             case 'start':
                 '''draw start elements'''
-                #TODO draw start text if any
-                #TODO draw start button if any
+                self.start_button.draw(self.screen, self.start_button.rect.collidepoint(mouse_pos))
             case 'minigame':
                 '''draw minigame elements'''
                 self.minigame.draw(self.screen)
@@ -72,12 +83,13 @@ class Game:
                 self.dialogue.draw(self.screen)
                 
 
-    
+
     def handle_click(self, event):
         """handles user input"""
         match self.state:
             case 'start':
-                transition(self.screen, self.background, self.phase_manager.start_phase())
+                if self.start_button.handle_event(event):
+                    transition(self.screen, self.background, self.phase_manager.start_phase())
             case 'minigame':
                 '''handle minigame interaction'''
                 if self.minigame.handle_event(event):
@@ -95,7 +107,6 @@ class Game:
                 self.game_over = True
     
     def init_new_phase(self, phase_info):
-        print(self.phase_manager.current_phase_index)
         match phase_info['type']:
             case 'minigame':
                 self.state = 'minigame'
@@ -121,8 +132,9 @@ class Game:
                 raise ValueError(f"Unknown phase type: {phase_info['type']}")
 
     def run(self):
-        running = True
-        while running:
+        clock = pg.time.Clock()
+        while not self.game_over:
+            clock.tick(60)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     from sys import exit
@@ -130,19 +142,23 @@ class Game:
 
                 if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                     self.handle_click(event)
+                
+                if event.type == pg.KEYDOWN and event.key == pg.K_d:
+                    print(str(pg.mouse.get_pos()))
             
             self.update()
             self.draw()
-            pg.display.flip()
 
-            if self.game_over:
-                running = False
+            font  = pg.font.SysFont('Arial', 30)
+            screen.blit(font.render(str(pg.mouse.get_pos()), True, (255, 255, 255)), (0,0))
+
+            pg.display.flip()
 
 
 
 if __name__ == "__main__":
     pg.init()
-    screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
+    screen = pg.display.set_mode((1920,1080))
     while True:
         game = Game(screen)
         game.run()
