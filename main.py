@@ -1,5 +1,6 @@
 import sys, os
 
+
 if hasattr(sys, '_MEIPASS'):
     # If the script is running as a bundled executable, change the working directory to the location of the executable
     # This is necessary for loading resources correctly in a bundled application
@@ -12,7 +13,7 @@ from math import pi, sin
 from qcm import QCM
 from button import Button
 from dialogue import Dialogue
-
+from fonts import DESCRIPTION_FONT, BIG_FONT
 
 def transition(screen : pg.Surface, current_frame : pg.Surface, next_frame : pg.Surface, time : float = 2):
         """Simple fade-in-out transition between one frame to another, can be easily used at other places.  
@@ -69,6 +70,8 @@ class Game:
         """draws the game elements on the screen"""
         self.screen.blit(self.background, (0, 0))
         mouse_pos = pg.mouse.get_pos()
+        next_text_surf = DESCRIPTION_FONT.render("Cliquez pour continuer", True, (255, 255, 255))
+        next_text_rect = next_text_surf.get_rect(bottomright=(self.screen.get_width() - 20, self.screen.get_height() - 20))
         match self.state:
             case 'start':
                 '''draw start elements'''
@@ -79,8 +82,14 @@ class Game:
             case 'transition':
                 '''draw transition elements'''
                 # draw transition text if any
+                if self.transition_text:
+                    text_surf = BIG_FONT.render(self.transition_text, True, (255, 255, 255))
+                    text_rect = text_surf.get_rect(center=(self.screen.get_width() // 2, 200))
+                    self.screen.blit(text_surf, text_rect)
+                self.screen.blit(next_text_surf, next_text_rect)
             case 'dialogue':
                 self.dialogue.draw(self.screen)
+                self.screen.blit(next_text_surf, next_text_rect)
                 
 
 
