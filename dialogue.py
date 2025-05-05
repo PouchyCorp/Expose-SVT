@@ -6,6 +6,8 @@ from random import choice
 MAX_LINE_SIZE = 100  # Maximum number of characters per line
 PAGE_SIZE = 5  # Number of lines per page
 
+DIALOG_BG = load_image('dialogwindow.png')
+
 class Dialogue:
     def __init__(self, text: list[str], character = None, documents = []):
         """
@@ -66,8 +68,8 @@ class Dialogue:
                 shortened_parse_text.append(segment)
         
         for segment in shortened_parse_text:
-            if len(segment[0]) > stop:
-                cropped_text.append([segment[0][:stop], segment[1]])
+            if len(segment[0]) >= stop:
+                cropped_text.append([segment[0][:stop+1], segment[1]])
                 break
             else:
                 cropped_text.append(segment)
@@ -187,10 +189,10 @@ class Dialogue:
         Draw the dialogue and bot animation on the screen.
         """
 
-        character_sprite_rect = self.character_sprite.get_rect(bottomleft=(0, 1080))
+        character_sprite_rect = self.character_sprite.get_rect(bottomleft=(30, 960))
         screen.blit(self.character_sprite, character_sprite_rect)
 
-        screen.blit(pg.Surface((0,0), pg.SRCALPHA), (300, 750))  #TODO: Replace with actual background image
+        screen.blit(DIALOG_BG, (0,0))
 
         for i, doc in enumerate(self.documents):
             doc_surf, doc_name = doc
@@ -200,10 +202,9 @@ class Dialogue:
 
         screen.blit(BIG_FONT.render(self.character_name, True, (200, 147, 42)), (200, 680))
 
-
         for i, surf in enumerate(self.bliting_list[-5:]):
-            line_height = 812 + 30 * i  # Calculate the line height
-            screen.blit(surf, (225, line_height))  # Draw each line of the dialogue
+            line_height = 775 + 45 * i  # Calculate the line height
+            screen.blit(surf, (91, line_height))  # Draw each line of the dialogue
     
     def click_interaction(self) -> bool:
         """

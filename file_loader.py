@@ -18,10 +18,7 @@ def load_image(filepath):
     if not os.path.exists(folder+filepath):
         raise FileNotFoundError(f"Image file not found: {filepath}")
     
-    try:
-        return image.load(folder+filepath).convert_alpha()
-    except error as e:
-        raise ValueError(f"Error loading image from file: {filepath}") from e
+    return image.load(folder+filepath).convert_alpha()
 
 def load_and_resize_image(filepath):
     image = load_image(filepath)

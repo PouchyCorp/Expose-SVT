@@ -1,12 +1,12 @@
 import pygame as pg
-from fonts import BUTTON_FONT
+from fonts import BIG_FONT
 
 COLOR_ACTIVE = (60,60,60)
 COLOR_INACTIVE = (50,50,50)
 class Button:
     def __init__(self, label : str, coord : tuple, effect, surf_active = None, surf_inactive = None, param : list = None):
         assert surf_active or surf_inactive, "initalize at least one of the two surface attributes"
-        self.name_surf = BUTTON_FONT.render(label, False, 'white')
+        self.name_surf = BIG_FONT.render(label, True, 'black')
         self.surf_active = surf_active
         self.surf_inactive = surf_inactive
         self.surf : pg.Surface = surf_inactive if surf_inactive else surf_active

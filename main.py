@@ -7,15 +7,7 @@ if hasattr(sys, '_MEIPASS'):
     # os.chdir(sys._MEIPASS) if hasattr(sys, '_MEIPASS') else None
     os.chdir(sys._MEIPASS) 
 
-import pygame as pg
-from phasemanager import PhaseManager
-from math import pi, sin
-from qcm import QCM
-from button import Button
-from dialogue import Dialogue
-from fonts import DESCRIPTION_FONT, BIG_FONT
-
-def transition(screen : pg.Surface, current_frame : pg.Surface, next_frame : pg.Surface, time : float = 2):
+def transition(screen : 'pg.Surface', current_frame : 'pg.Surface', next_frame : 'pg.Surface', time : float = 2):
         """Simple fade-in-out transition between one frame to another, can be easily used at other places.  
         Reimplementation of the __play_transition method above"""
         clock = pg.time.Clock()
@@ -44,7 +36,8 @@ def transition(screen : pg.Surface, current_frame : pg.Surface, next_frame : pg.
         return next_frame
 
 class Game:
-    def __init__(self, screen):
+    def __init__(self, screen : 'pg.Surface'):
+        """Initialize the game"""
         self.screen : pg.Surface = screen 
         self.state = 'start'
         self.background = pg.Surface((screen.get_width(), screen.get_height()))
@@ -56,8 +49,12 @@ class Game:
             init_new_phase= self.init_new_phase)
         self.game_over = False
 
-        self.start_button = Button('Commencer', (screen.get_width() // 2, screen.get_height() // 2), int, pg.Surface((200, 50)))
-    
+        img = load_image('buttonred.png')
+        self.start_button = Button('Commencer', (screen.get_width() // 2 - img.get_width()//2, screen.get_height() // 2 + 200 - img.get_height()//2), int, whiten(img), img)
+        
+        self.title_surf = load_image('title.png')
+        self.title_rect = self.title_surf.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2 - 200))
+
     def update(self):
         """handles animations and updates the game state"""
         match self.state:
@@ -75,6 +72,8 @@ class Game:
         match self.state:
             case 'start':
                 '''draw start elements'''
+
+                self.screen.blit(self.title_surf, self.title_rect.topleft)
                 self.start_button.draw(self.screen, self.start_button.rect.collidepoint(mouse_pos))
             case 'minigame':
                 '''draw minigame elements'''
@@ -89,7 +88,8 @@ class Game:
                 self.screen.blit(next_text_surf, next_text_rect)
             case 'dialogue':
                 self.dialogue.draw(self.screen)
-                self.screen.blit(next_text_surf, next_text_rect)
+                if self.dialogue.char_count >= len(self.dialogue.current_dialogue_part):
+                    self.screen.blit(next_text_surf, next_text_rect)
                 
 
 
@@ -166,8 +166,19 @@ class Game:
 
 
 if __name__ == "__main__":
+    import pygame as pg
+
     pg.init()
     screen = pg.display.set_mode((1920,1080))
+    
+    from phasemanager import PhaseManager
+    from math import pi, sin
+    from qcm import QCM, whiten
+    from button import Button
+    from dialogue import Dialogue
+    from fonts import DESCRIPTION_FONT, BIG_FONT
+    from file_loader import load_image
+
     while True:
         game = Game(screen)
         game.run()
