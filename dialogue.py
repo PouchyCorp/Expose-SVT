@@ -230,9 +230,19 @@ class Dialogue:
 
         for i, doc in enumerate(self.documents):
             doc_surf, doc_name = doc
-            doc_rect = doc_surf.get_rect(topright=(1820, 100))  # Position the document at the top left corner
+            padding = 10  # Padding between documents
+            row = i // 4  # Determine the row (0-based index)
+            col = i % 4   # Determine the column (0-based index)
+            x_offset = 1820 - (col * (doc_surf.get_width() + padding))  # Adjust x position for each column
+            y_offset = 100 + (row * (doc_surf.get_height() + padding))  # Adjust y position for each row
+
+            doc_rect = doc_surf.get_rect(topright=(x_offset, y_offset))
             screen.blit(doc_surf, doc_rect)
-            screen.blit(DESCRIPTION_FONT.render(doc_name, True, 'gray'), (doc_rect.bottomleft[0], doc_rect.bottomleft[1]+5))  # Draw the document name below the document
+
+            # Render and position the document name below the document
+            doc_name_surf = DESCRIPTION_FONT.render(doc_name, True, 'gray')
+            doc_name_rect = doc_name_surf.get_rect(midtop=(doc_rect.centerx, doc_rect.bottom + 5))
+            screen.blit(doc_name_surf, doc_name_rect)
         
         character_name_sprite = BIG_FONT.render(self.character_name, True, (200, 147, 42))
         character_name_rect = character_name_sprite.get_rect(center=(400, 670))  # Center the character name at the bottom of the screen

@@ -1,7 +1,7 @@
 [
     {
         "name": "Part 1",
-        "background": "placeholderbackground.png",
+        "background": "titlebackground.jpg",
         "character": "Jouvelot",
         "type": "dialogue",
         "link": "Jouvelot_1"
