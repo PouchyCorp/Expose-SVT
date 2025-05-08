@@ -244,7 +244,7 @@ class Dialogue:
             doc_name_rect = doc_name_surf.get_rect(midtop=(doc_rect.centerx, doc_rect.bottom + 5))
             screen.blit(doc_name_surf, doc_name_rect)
         
-        character_name_sprite = BIG_FONT.render(self.character_name, True, (200, 147, 42))
+        character_name_sprite = BIG_FONT.render(self.character_name, True, (144,213,255))
         character_name_rect = character_name_sprite.get_rect(center=(400, 670))  # Center the character name at the bottom of the screen
         screen.blit(character_name_sprite, character_name_rect)
 

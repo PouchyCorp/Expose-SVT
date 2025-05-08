@@ -95,10 +95,6 @@
         "link": "Chef_Météo_1",
         "documents": [
             {
-                "name": "Satelites Météorologique",
-                "link": "document2.png"
-            },
-            {
                 "name": "Radar Météorologique",
                 "link": "document3.png"
             },
