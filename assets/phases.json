@@ -60,13 +60,13 @@
         "background": "backgroundclimatologueextrieur.jpg",
         "character": "Chef des Climatologues",
         "type": "dialogue",
-        "link": "Chef_Clima_2"
+        "link": "Chef_Clima_2",
         "documents": [
             {
                 "name": "Données climatiques de la station de Kourou (Guyane)",
                 "link": "document1.jpg"
-            },
-        ],
+            }
+        ]
     },
     {
         "name": "QCM 1.1",
@@ -92,7 +92,7 @@
         "background": "backgroundmeteorologueexterieur.jpg",
         "character": "Chef des Météorologues",
         "type": "dialogue",
-        "link": "Chef_Météo_1"
+        "link": "Chef_Météo_1",
         "documents": [
             {
                 "name": "Satelites Météorologique",
@@ -101,12 +101,12 @@
             {
                 "name": "Radar Météorologique",
                 "link": "document3.jpg"
-            }
+            },
             {
                 "name": "Carte de Mesures de Températures (en C°)",
                 "link": "document4.jpg"
             }
-        ],
+        ]
     },
     {
         "name": "QCM 2.1",
@@ -173,5 +173,5 @@
         "character": "Jouvelot",
         "type": "dialogue",
         "link": "Jouvelot_11"
-    },
+    }
 ]
