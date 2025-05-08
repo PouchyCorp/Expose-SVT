@@ -73,7 +73,7 @@ class Game:
         match self.state:
             case 'start':
                 '''draw start elements'''
-
+                self.screen.blit(TITLE_BACKGROUND, (0, 0))
                 self.screen.blit(self.title_surf, self.title_rect.topleft)
                 self.start_button.draw(self.screen, self.start_button.rect.collidepoint(mouse_pos))
             case 'minigame':
@@ -154,14 +154,9 @@ class Game:
                     CLICK_SOUND.play()
                     self.handle_click(event)
                 
-                if event.type == pg.KEYDOWN and event.key == pg.K_d:
-                    print(str(pg.mouse.get_pos()))
             
             self.update()
             self.draw()
-
-            font  = pg.font.SysFont('Arial', 30)
-            screen.blit(font.render(str(pg.mouse.get_pos()), True, (255, 255, 255)), (0,0))
 
             pg.display.flip()
 
@@ -181,7 +176,7 @@ if __name__ == "__main__":
     from button import Button
     from dialogue import Dialogue
     from fonts import DESCRIPTION_FONT, BIG_FONT
-    from file_loader import load_image
+    from file_loader import load_image, load_and_resize_image
 
     MUSIC = pg.mixer.Sound('assets/music.wav')
     MUSIC.set_volume(0.1)
@@ -189,6 +184,8 @@ if __name__ == "__main__":
     
     CLICK_SOUND = pg.mixer.Sound('assets/clic.mp3')
     CLICK_SOUND.set_volume(0.5)
+
+    TITLE_BACKGROUND = load_and_resize_image('titlebackground.jpg')
 
     while True:
         game = Game(screen)
