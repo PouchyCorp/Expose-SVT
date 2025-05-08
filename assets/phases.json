@@ -9,41 +9,169 @@
     {
         "name": "Part 2",
         "background": "backgroundmairie.jpg",
+        "character": "Jouvelot",
         "type": "dialogue",
         "link": "Jouvelot_2"
     },
     {
-        "name": "Transition Scene",
-        "background": "placeholderbackground.png",
-        "text" : "Placeholder text",
-        "type": "transition",
-        "link": "transition_dialogue"
+        "name": "Part 3",
+        "background": "backgroundmairie.jpg",
+        "character": "Maire",
+        "type": "dialogue",
+        "link": "Maire_1"
     },
     {
-        "name": "Final Minigame",
-        "background": "placeholderbackground2.png",
+        "name": "Part 4",
+        "background": "backgroundmairie.jpg",
+        "character": "Jouvelot",
+        "type": "dialogue",
+        "link": "Jouvelot_3"
+    },
+    {
+        "name": "Part 5",
+        "background": "backgroundmairie.jpg",
+        "character": "Maire",
+        "type": "dialogue",
+        "link": "Maire_2"
+    },
+     {
+        "name": "Part 6",
+        "background": "backgroundmairie.jpg",
+        "character": "Jouvelot",
+        "type": "dialogue",
+        "link": "Jouvelot_4"
+    },
+     {
+        "name": "Part 6",
+        "background": "backgroundclimatologueextrieur.jpg",
+        "character": "Chef des Climatologues",
+        "type": "dialogue",
+        "link": "Chef_Clima_1"
+    },
+    {
+        "name": "Part 7",
+        "background": "backgroundclimatologueextrieur.jpg",
+        "character": "Jouvelot",
+        "type": "dialogue",
+        "link": "Jouvelot_5"
+    },
+    {
+        "name": "Part 8",
+        "background": "backgroundclimatologueextrieur.jpg",
+        "character": "Chef des Climatologues",
+        "type": "dialogue",
+        "link": "Chef_Clima_2"
+        "documents": [
+            {
+                "name": "Données climatiques de la station de Kourou (Guyane)",
+                "link": "document1.jpg"
+            },
+        ],
+    },
+    {
+        "name": "QCM 1.1",
+        "background": "backgroundclimatologue.jpg",
+        "type": "minigame",
+        "link": "minigame1"
+    },
+    {
+        "name": "QCM 1.2",
+        "background": "backgroundclimatologue.jpg",
         "type": "minigame",
         "link": "minigame2"
     },
     {
-        "name": "Ending",
-        "background": "placeholderbackground.png",
-        "type": "dialogue",
+        "name": "Part 9",
+        "background": "backgroundclimatologueextrieur.jpg",
         "character": "Jouvelot",
-        "documents": [
-            {
-                "name": "Placeholder",
-                "link": "placeholderdocument.png"
-            },
-            {
-                "name": "Placeholder",
-                "link": "placeholderdocument.png"
-            }
-        ],
-        "link": "ending_dialogue"
+        "type": "dialogue",
+        "link": "Jouvelot_6"
     },
     {
-        "type": "end",
-        "background": "placeholderbackground.png"
-    }
+        "name": "Part 10",
+        "background": "backgroundmeteorologueexterieur.jpg",
+        "character": "Chef des Météorologues",
+        "type": "dialogue",
+        "link": "Chef_Météo_1"
+        "documents": [
+            {
+                "name": "Satelites Météorologique",
+                "link": "document2.jpg"
+            },
+            {
+                "name": "Radar Météorologique",
+                "link": "document3.jpg"
+            }
+            {
+                "name": "Carte de Mesures de Températures (en C°)",
+                "link": "document4.jpg"
+            }
+        ],
+    },
+    {
+        "name": "QCM 2.1",
+        "background": "backgroundmeteorologue.jpg",
+        "type": "minigame",
+        "link": "minigame3"
+    },
+    {
+        "name": "QCM 2.2",
+        "background": "backgroundmeteorologue.jpg",
+        "type": "minigame",
+        "link": "minigame4"
+    },
+    {
+        "name": "Part 11",
+        "background": "backgroundclimatologueextrieur.jpg",
+        "character": "Jouvelot",
+        "type": "dialogue",
+        "link": "Jouvelot_7"
+    },
+    {
+        "name": "Part 12",
+        "background": "backgroundmairie.jpg",
+        "character": "Maire",
+        "type": "dialogue",
+        "link": "Maire_3"
+    },
+    {
+        "name": "Part 13",
+        "background": "backgroundmairie.jpg",
+        "character": "Jouvelot",
+        "type": "dialogue",
+        "link": "Jouvelot_8"
+    },
+    {
+        "name": "QCM 3.1",
+        "background": "backgroundmairie.jpg",
+        "type": "minigame",
+        "link": "minigame5"
+    },
+    {
+        "name": "Part 14",
+        "background": "backgroundmairie.jpg",
+        "character": "Jouvelot",
+        "type": "dialogue",
+        "link": "Jouvelot_9"
+    },
+    {
+        "name": "QCM 3.2",
+        "background": "backgroundmairie.jpg",
+        "type": "minigame",
+        "link": "minigame6"
+    },
+    {
+        "name": "Part 14",
+        "background": "backgroundmairie.jpg",
+        "character": "Jouvelot",
+        "type": "dialogue",
+        "link": "Jouvelot_10"
+    },
+    {
+        "name": "Part 15",
+        "background": "backgroundmairie.jpg",
+        "character": "Jouvelot",
+        "type": "dialogue",
+        "link": "Jouvelot_11"
+    },
 ]
