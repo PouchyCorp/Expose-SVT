@@ -10,8 +10,8 @@
         "correct_answer_ind": 0
     },
     "minigame3" : {
-        "question": "La météorologie permet de prévoir les variations de grandeurs atmosphériques de manière :",
-        "options": ["Longue (dans le temps) et précise", "Longue et peu précise", "Courte et précise", "Courte et peu précise"],
+        "question": "(Dans la Team) La météorologie permet de prévoir les variations de grandeurs atmosphériques de manière :",
+        "options": ["Longue et précise", "Longue et peu précise", "Courte et précise", "Courte et peu précise"],
         "correct_answer_ind": 2
     },
     "minigame4" : {
