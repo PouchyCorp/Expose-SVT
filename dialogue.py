@@ -8,6 +8,12 @@ PAGE_SIZE = 5  # Number of lines per page
 
 DIALOG_BG = load_image('dialogwindow.png')
 
+pg.mixer.music.load('assets/voice.mp3')
+pg.mixer.music.set_volume(0.2)  # Set the volume of the voice
+pg.mixer.music.play(-1)  # Play the voice in a loop
+pg.mixer.music.pause()  # Pause the voice
+
+
 class Dialogue:
     def __init__(self, text: list[str], character = None, documents = []):
         """
@@ -122,6 +128,7 @@ class Dialogue:
         Update the dialogue animation.
         """
         if self.char_count <= len(self.current_dialogue_part):  # If there are remaining characters to be shown
+            pg.mixer.music.unpause()  # Unpause the voice
             words = self.current_dialogue_part[:self.char_count].split(' ')
             lines = []
             current_line = ""
@@ -137,6 +144,8 @@ class Dialogue:
 
             self.segmented_text = lines
             self.char_count += 1  # Increment the character count
+        else:
+            pg.mixer.music.pause()
         
         self.bliting_list = []  # Reset bliting list
         for segment in self.segmented_text:

@@ -2,6 +2,8 @@ from button import Button
 import pygame as pg
 from file_loader import load_image
 from fonts import DIALOGUE_FONT_ITALIC
+WRONG_SOUND = pg.mixer.Sound('assets/wrong-answer-buzzer.mp3')
+CORRECT_SOUND = pg.mixer.Sound('assets/correct.mp3')
 
 QCM_WINDOW = load_image('qcmwindow.png')
 
@@ -39,11 +41,10 @@ class QCM:
         for button in self.buttons:
             if button.handle_event(event):
                 if button.effect(*button.param):
+                    pg.mixer.Sound.play(CORRECT_SOUND)
                     return True
-                    #TODO : Add feedback for correct/incorrect answer
+        pg.mixer.Sound.play(WRONG_SOUND)
         return False 
-        #TODO : Add feedback for correct/incorrect answer
-
     def draw(self, screen : pg.Surface):
         # Display the question and options on the screen
         question_rect = self.question_surface.get_rect(center=(937, 415))

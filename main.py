@@ -7,6 +7,7 @@ if hasattr(sys, '_MEIPASS'):
     # os.chdir(sys._MEIPASS) if hasattr(sys, '_MEIPASS') else None
     os.chdir(sys._MEIPASS) 
 
+
 def transition(screen : 'pg.Surface', current_frame : 'pg.Surface', next_frame : 'pg.Surface', time : float = 2):
         """Simple fade-in-out transition between one frame to another, can be easily used at other places.  
         Reimplementation of the __play_transition method above"""
@@ -150,6 +151,7 @@ class Game:
                     exit()
 
                 if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+                    CLICK_SOUND.play()
                     self.handle_click(event)
                 
                 if event.type == pg.KEYDOWN and event.key == pg.K_d:
@@ -169,6 +171,8 @@ if __name__ == "__main__":
     import pygame as pg
 
     pg.init()
+    pg.mixer.init()
+
     screen = pg.display.set_mode((1920,1080))
     
     from phasemanager import PhaseManager
@@ -178,6 +182,13 @@ if __name__ == "__main__":
     from dialogue import Dialogue
     from fonts import DESCRIPTION_FONT, BIG_FONT
     from file_loader import load_image
+
+    MUSIC = pg.mixer.Sound('assets/music.wav')
+    MUSIC.set_volume(0.2)
+    MUSIC.play(-1)  # Play the music in a loop
+    
+    CLICK_SOUND = pg.mixer.Sound('assets/clic.mp3')
+    CLICK_SOUND.set_volume(0.5)
 
     while True:
         game = Game(screen)
