@@ -1,16 +1,16 @@
 [
     {
-        "name": "Introduction",
+        "name": "Part 1",
         "background": "placeholderbackground.png",
         "character": "Jouvelot",
         "type": "dialogue",
-        "link": "intro_dialogue"
+        "link": "Jouvelot_1"
     },
     {
-        "name": "First Minigame",
-        "background": "placeholderbackground2.png",
-        "type": "minigame",
-        "link": "minigame1"
+        "name": "Part 2",
+        "background": "backgroundmairie.jpg",
+        "type": "dialogue",
+        "link": "Jouvelot_2"
     },
     {
         "name": "Transition Scene",
