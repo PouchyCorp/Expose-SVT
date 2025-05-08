@@ -64,7 +64,7 @@
         "documents": [
             {
                 "name": "Données climatiques de la station de Kourou (Guyane)",
-                "link": "document1.jpg"
+                "link": "document1.png"
             }
         ]
     },
@@ -96,15 +96,15 @@
         "documents": [
             {
                 "name": "Satelites Météorologique",
-                "link": "document2.jpg"
+                "link": "document2.png"
             },
             {
                 "name": "Radar Météorologique",
-                "link": "document3.jpg"
+                "link": "document3.png"
             },
             {
                 "name": "Carte de Mesures de Températures (en C°)",
-                "link": "document4.jpg"
+                "link": "document4.png"
             }
         ]
     },
