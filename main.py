@@ -184,7 +184,7 @@ if __name__ == "__main__":
     from file_loader import load_image
 
     MUSIC = pg.mixer.Sound('assets/music.wav')
-    MUSIC.set_volume(0.2)
+    MUSIC.set_volume(0.1)
     MUSIC.play(-1)  # Play the music in a loop
     
     CLICK_SOUND = pg.mixer.Sound('assets/clic.mp3')

@@ -129,18 +129,28 @@ class Dialogue:
         """
         if self.char_count <= len(self.current_dialogue_part):  # If there are remaining characters to be shown
             pg.mixer.music.unpause()  # Unpause the voice
-            words = self.current_dialogue_part[:self.char_count].split(' ')
+            visible_text = self.crop_parsed_text(self.parsed_dialogue_part, 0, self.char_count)
             lines = []
-            current_line = ""
+            current_line = []
+            current_line_length = 0
 
-            for word in words:
-                if len(current_line) + len(word) + 1 <= MAX_LINE_SIZE:
-                    current_line += (word + " ")
-                else:
-                    lines.append(current_line.strip())
-                    current_line = word + " "
+            for segment, segment_type in visible_text:
+                words = segment.split(' ')
+                for i, word in enumerate(words):
+                    word_length = len(word) + (1 if current_line or i > 0 else 0)  # Account for space if not the first word
+                    if current_line_length + word_length <= MAX_LINE_SIZE:
+                        if i > 0 or current_line:  # Add a space before the word if it's not the first word in the segment
+                            current_line.append((' ', 0))
+                            current_line_length += 1
+                        current_line.append((word, segment_type))
+                        current_line_length += len(word)
+                    else:
+                        lines.append(current_line)
+                        current_line = [(word, segment_type)]
+                        current_line_length = len(word)
+
             if current_line:
-                lines.append(current_line.strip())
+                lines.append(current_line)
 
             self.segmented_text = lines
             self.char_count += 1  # Increment the character count
@@ -148,8 +158,8 @@ class Dialogue:
             pg.mixer.music.pause()
         
         self.bliting_list = []  # Reset bliting list
-        for segment in self.segmented_text:
-            self.bliting_list.append(self.get_text_surf([[segment, 0]]))
+        for line in self.segmented_text:
+            self.bliting_list.append(self.get_text_surf(line))
 
     def is_on_last_part(self):
         """
@@ -171,14 +181,15 @@ class Dialogue:
                 if i < len(text)-1 and text[i] == '/' and text[i+1] == sig:
                     i += 3  # Skip the esc characters ('/', sig, '/')
                     parsed_text.append(['', sig_ind])
-                    while i < len(text)-1 and text[i] != '/':
+                    while i < len(text) and text[i] != '/':
                         parsed_text[-1][0] += text[i]
                         i += 1
-                    i += 1  # Skip the '/' character
+                    if i < len(text) and text[i] == '/':  # Ensure we don't go out of bounds
+                        i += 1  # Skip the '/' character
                     parsed_text.append(['', 0])
                     break
             
-            if i > len(text):
+            if i >= len(text):  # Ensure we don't access out of bounds
                 break
             parsed_text[-1][0] += text[i]
             i += 1
@@ -224,7 +235,7 @@ class Dialogue:
             screen.blit(DESCRIPTION_FONT.render(doc_name, True, 'gray'), (doc_rect.bottomleft[0], doc_rect.bottomleft[1]+5))  # Draw the document name below the document
         
         character_name_sprite = BIG_FONT.render(self.character_name, True, (200, 147, 42))
-        character_name_rect = character_name_sprite.get_rect(center=(300, 670))  # Center the character name at the bottom of the screen
+        character_name_rect = character_name_sprite.get_rect(center=(400, 670))  # Center the character name at the bottom of the screen
         screen.blit(character_name_sprite, character_name_rect)
 
         for i, surf in enumerate(self.bliting_list[-5:]):
