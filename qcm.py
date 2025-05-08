@@ -17,7 +17,7 @@ def whiten(surface : 'pg.Surface'):
 
 class QCM:
     def __init__(self, question, options, correct_answer_ind):
-        self.question_surface = self.render_multiline_text(question, BIG_FONT, 1800, 'white')  # Adjust width as needed
+        self.question_surface = self.render_multiline_text(question, BIG_FONT, 1800, (144,213,255))  # Adjust width as needed
         self.options = options
         self.correct_answer_ind = correct_answer_ind
 
@@ -56,7 +56,7 @@ class QCM:
         combined_surface = pg.Surface((max_width, total_height), pg.SRCALPHA)
 
         y_offset = 0
-        for surf in surfaces:
+        for surf in surfaces: 
             combined_surface.blit(surf, (0, y_offset))
             y_offset += surf.get_height()
 

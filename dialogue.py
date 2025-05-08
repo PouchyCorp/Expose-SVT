@@ -240,7 +240,7 @@ class Dialogue:
             screen.blit(doc_surf, doc_rect)
 
             # Render and position the document name below the document
-            doc_name_surf = DESCRIPTION_FONT.render(doc_name, True, 'gray')
+            doc_name_surf = DESCRIPTION_FONT.render(doc_name, True, 'black')
             doc_name_rect = doc_name_surf.get_rect(midtop=(doc_rect.centerx, doc_rect.bottom + 5))
             screen.blit(doc_name_surf, doc_name_rect)
         
