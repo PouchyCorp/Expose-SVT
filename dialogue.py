@@ -29,16 +29,16 @@ class Dialogue:
             case 'Jouvelot':
                 self.sprites_choices = [load_and_resize_image("jouvelot1.png"), load_and_resize_image("jouvelot2.png"), load_and_resize_image("jouvelot3.png"), load_and_resize_image("jouvelot4.png"), load_and_resize_image("jouvelot5.png")]
 
-            case 'Meteo':
+            case 'Jean-Jaques Jet-Stream':
                 self.sprites_choices = [load_and_resize_image("riche1.png"), load_and_resize_image("riche2.png"), load_and_resize_image("riche3.png"), load_and_resize_image("riche4.png")]
             
-            case 'Climato':
+            case 'Professeur Paleo-Climat':
                 self.sprites_choices = [load_and_resize_image("sdf1.png"), load_and_resize_image("sdf2.png"), load_and_resize_image("sdf3.png"), load_and_resize_image("sdf4.png")]
             
             case 'Villageois':
                 self.sprites_choices = [load_and_resize_image("pnj1.png"), load_and_resize_image("pnj2.png")]
 
-            case 'Pmurt':
+            case 'Maire':
                 self.sprites_choices = [load_and_resize_image("trump1.png"), load_and_resize_image("trump2.png"), load_and_resize_image("trump3.png")]
 
             case _:
@@ -119,13 +119,26 @@ class Dialogue:
         """
         Update the dialogue animation.
         """
-        if self.char_count <= len(self.current_dialogue_part): ## If there are remaining characters to be shown
-            self.segmented_text[self.char_count // MAX_LINE_SIZE] = self.crop_parsed_text(self.parsed_dialogue_part, (self.char_count // MAX_LINE_SIZE) * MAX_LINE_SIZE , self.char_count)
+        if self.char_count <= len(self.current_dialogue_part):  # If there are remaining characters to be shown
+            words = self.current_dialogue_part[:self.char_count].split(' ')
+            lines = []
+            current_line = ""
+
+            for word in words:
+                if len(current_line) + len(word) + 1 <= MAX_LINE_SIZE:
+                    current_line += (word + " ")
+                else:
+                    lines.append(current_line.strip())
+                    current_line = word + " "
+            if current_line:
+                lines.append(current_line.strip())
+
+            self.segmented_text = lines
             self.char_count += 1  # Increment the character count
         
         self.bliting_list = []  # Reset bliting list
         for segment in self.segmented_text:
-            self.bliting_list.append(self.get_text_surf(segment))
+            self.bliting_list.append(self.get_text_surf([[segment, 0]]))
 
     def is_on_last_part(self):
         """
@@ -144,7 +157,6 @@ class Dialogue:
         i = 0  # Index for the text
         while i < len(text):
             for sig, sig_ind in [('b', 1), ('i', 2), ('r', 3)]:
-
                 if i < len(text)-1 and text[i] == '/' and text[i+1] == sig:
                     i += 3  # Skip the esc characters ('/', sig, '/')
                     parsed_text.append(['', sig_ind])

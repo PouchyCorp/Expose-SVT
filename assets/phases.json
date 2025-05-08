@@ -44,7 +44,7 @@
      {
         "name": "Part 6",
         "background": "backgroundclimatologueextrieur.jpg",
-        "character": "Chef des Climatologues",
+        "character": "Professeur Paleo-Climat",
         "type": "dialogue",
         "link": "Chef_Clima_1"
     },
@@ -58,7 +58,7 @@
     {
         "name": "Part 8",
         "background": "backgroundclimatologueextrieur.jpg",
-        "character": "Chef des Climatologues",
+        "character": "Professeur Paleo-Climat",
         "type": "dialogue",
         "link": "Chef_Clima_2",
         "documents": [
@@ -90,7 +90,7 @@
     {
         "name": "Part 10",
         "background": "backgroundmeteorologueexterieur.jpg",
-        "character": "Chef des Météorologues",
+        "character": "Jean-Jaques Jet-Stream",
         "type": "dialogue",
         "link": "Chef_Météo_1",
         "documents": [
