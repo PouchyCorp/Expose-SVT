@@ -2,31 +2,31 @@
     "minigame1" : {
         "question": "Sur quelle période minimale la climatologie effectue-t-elle ses mesures ?",
         "options": ["10 Ans", "1 An", "30 Ans", "50 Ans"],
-        "correct_answer_ind": 3
+        "correct_answer_ind": 2
     },
     "minigame2" : {
         "question": "Dans ce document, quelle est la température maximale que l’on peut espérer en Décembre à Kourou ? (4p47)",
         "options": ["29.5°C", "35°C", "23.5°C", "280°C"],
-        "correct_answer_ind": 1
+        "correct_answer_ind": 0
     },
     "minigame3" : {
         "question": "La météorologie permet de prévoir les variations de grandeurs atmosphériques de manière :",
         "options": ["Longue (dans le temps) et précise", "Longue et peu précise", "Courte et précise", "Courte et peu précise"],
-        "correct_answer_ind": 3
+        "correct_answer_ind": 2
     },
     "minigame4" : {
         "question": "Quelle grandeur atmosphérique n’est pas mesurée par la météorologie (selon la page 46) ?",
         "options": ["La température", "La nébulosité", "La pression", "L'obliquité de la Terre"],
-        "correct_answer_ind": 4
+        "correct_answer_ind": 3
     },
     "minigame5" : {
         "question": "Quel groupe devrait gérer les recherches sur un temps long ?",
         "options": ["La météorologie", "La climatologie"],
-        "correct_answer_ind": 2
+        "correct_answer_ind": 1
     },
     "minigame6" : {
         "question": "Quel groupe devrait gérer les recherches sur un temps court ?",
         "options": ["La météorologie", "La climatologie"],
-        "correct_answer_ind": 1
+        "correct_answer_ind": 0
     }
 }
