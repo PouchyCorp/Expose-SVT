@@ -105,6 +105,8 @@ class Dialogue:
                     surf_list.append(DIALOGUE_FONT_ITALIC.render(segment, False, font_color))
                 case 3:  # Red text
                     surf_list.append(DIALOGUE_FONT.render(segment, False, 'red'))
+                case 4:  # Red bold text
+                    surf_list.append(DIALOGUE_FONT_BOLD.render(segment, False, 'red'))
                 case _: # Default to normal text
                     surf_list.append(DIALOGUE_FONT.render(segment, False, font_color))
         
@@ -156,7 +158,7 @@ class Dialogue:
         parsed_text : list[list]= [['', 0]]  # List of tuples (text, status) 0: normal, 1: bold, 2: italic, 3: red
         i = 0  # Index for the text
         while i < len(text):
-            for sig, sig_ind in [('b', 1), ('i', 2), ('r', 3)]:
+            for sig, sig_ind in [('b', 1), ('i', 2), ('r', 3), ('a', 4)]:
                 if i < len(text)-1 and text[i] == '/' and text[i+1] == sig:
                     i += 3  # Skip the esc characters ('/', sig, '/')
                     parsed_text.append(['', sig_ind])

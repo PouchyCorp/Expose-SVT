@@ -41,7 +41,6 @@ class QCM:
                 if button.effect(*button.param):
                     return True
                     #TODO : Add feedback for correct/incorrect answer
-                    
         return False 
         #TODO : Add feedback for correct/incorrect answer
 
