@@ -128,6 +128,27 @@
         "link": "Jouvelot_7"
     },
     {
+        "name": "Part 11b",
+        "background": "backgroundclimatologueextrieur.jpg",
+        "character": "Sceptix",
+        "type": "dialogue",
+        "link": "Sceptix_1"
+    },
+    {
+        "name": "Part 11c",
+        "background": "backgroundclimatologueextrieur.jpg",
+        "character": "Jouvelot",
+        "type": "dialogue",
+        "link": "Jouvelot_7b"
+    },
+    {
+        "name": "Part 11d",
+        "background": "backgroundclimatologueextrieur.jpg",
+        "character": "Sceptix",
+        "type": "dialogue",
+        "link": "Sceptix_2"
+    },
+    {
         "name": "Part 12",
         "background": "backgroundmairie.jpg",
         "character": "Maire",

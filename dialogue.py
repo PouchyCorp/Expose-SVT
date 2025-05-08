@@ -41,7 +41,7 @@ class Dialogue:
             case 'Professeur Paleo-Climat':
                 self.sprites_choices = [load_and_resize_image("sdf1.png"), load_and_resize_image("sdf2.png"), load_and_resize_image("sdf3.png"), load_and_resize_image("sdf4.png")]
             
-            case 'Villageois':
+            case 'Sceptix':
                 self.sprites_choices = [load_and_resize_image("pnj1.png"), load_and_resize_image("pnj2.png")]
 
             case 'Maire':
