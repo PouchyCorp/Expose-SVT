@@ -211,8 +211,10 @@ class Dialogue:
             doc_rect = doc_surf.get_rect(topright=(1820, 100))  # Position the document at the top left corner
             screen.blit(doc_surf, doc_rect)
             screen.blit(DESCRIPTION_FONT.render(doc_name, True, 'gray'), (doc_rect.bottomleft[0], doc_rect.bottomleft[1]+5))  # Draw the document name below the document
-
-        screen.blit(BIG_FONT.render(self.character_name, True, (200, 147, 42)), (200, 680))
+        
+        character_name_sprite = BIG_FONT.render(self.character_name, True, (200, 147, 42))
+        character_name_rect = character_name_sprite.get_rect(center=(300, 670))  # Center the character name at the bottom of the screen
+        screen.blit(character_name_sprite, character_name_rect)
 
         for i, surf in enumerate(self.bliting_list[-5:]):
             line_height = 775 + 45 * i  # Calculate the line height

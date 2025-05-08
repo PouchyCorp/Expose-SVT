@@ -1,7 +1,7 @@
 from button import Button
 import pygame as pg
 from file_loader import load_image
-from fonts import BIG_FONT
+from fonts import DIALOGUE_FONT_ITALIC
 
 QCM_WINDOW = load_image('qcmwindow.png')
 
@@ -15,7 +15,7 @@ def whiten(surface : 'pg.Surface'):
 
 class QCM:
     def __init__(self, question, options, correct_answer_ind):
-        self.question_surface = BIG_FONT.render(question, True, (200, 147, 42))
+        self.question_surface = DIALOGUE_FONT_ITALIC.render(question, True, (200-50, 147-50, 42))
         self.options = options
         self.correct_answer_ind = correct_answer_ind
 
@@ -41,6 +41,7 @@ class QCM:
                 if button.effect(*button.param):
                     return True
                     #TODO : Add feedback for correct/incorrect answer
+                    
         return False 
         #TODO : Add feedback for correct/incorrect answer
 
