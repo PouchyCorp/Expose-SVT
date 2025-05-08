@@ -1,7 +1,7 @@
 from button import Button
 import pygame as pg
 from file_loader import load_image
-from fonts import DIALOGUE_FONT_ITALIC
+from fonts import BIG_FONT
 WRONG_SOUND = pg.mixer.Sound('assets/wrong-answer-buzzer.mp3')
 CORRECT_SOUND = pg.mixer.Sound('assets/correct.mp3')
 
@@ -17,7 +17,7 @@ def whiten(surface : 'pg.Surface'):
 
 class QCM:
     def __init__(self, question, options, correct_answer_ind):
-        self.question_surface = DIALOGUE_FONT_ITALIC.render(question, True, (200-50, 147-50, 42))
+        self.question_surface = self.render_multiline_text(question, BIG_FONT, 1800, 'white')  # Adjust width as needed
         self.options = options
         self.correct_answer_ind = correct_answer_ind
 
@@ -33,6 +33,35 @@ class QCM:
             )
             self.buttons.append(button)
 
+    @staticmethod
+    def render_multiline_text(text, font, max_width, color):
+        """Render text into multiple lines if it exceeds max_width."""
+        words = text.split(' ')
+        lines = []
+        current_line = []
+
+        for word in words:
+            test_line = ' '.join(current_line + [word])
+            if font.size(test_line)[0] <= max_width:
+                current_line.append(word)
+            else:
+                lines.append(' '.join(current_line))
+                current_line = [word]
+
+        if current_line:
+            lines.append(' '.join(current_line))
+
+        surfaces = [font.render(line, True, color) for line in lines]
+        total_height = sum(surf.get_height() for surf in surfaces)
+        combined_surface = pg.Surface((max_width, total_height), pg.SRCALPHA)
+
+        y_offset = 0
+        for surf in surfaces:
+            combined_surface.blit(surf, (0, y_offset))
+            y_offset += surf.get_height()
+
+        return combined_surface
+
     def check_answer(self, answer):
         return answer == self.correct_answer_ind
 
@@ -45,6 +74,7 @@ class QCM:
                     return True
         pg.mixer.Sound.play(WRONG_SOUND)
         return False 
+    
     def draw(self, screen : pg.Surface):
         # Display the question and options on the screen
         question_rect = self.question_surface.get_rect(center=(937, 415))

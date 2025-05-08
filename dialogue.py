@@ -3,7 +3,7 @@ from fonts import DIALOGUE_FONT, DIALOGUE_FONT_BOLD, DIALOGUE_FONT_ITALIC, DESCR
 from file_loader import load_and_resize_image, load_image
 from random import choice
 
-MAX_LINE_SIZE = 100  # Maximum number of characters per line
+MAX_LINE_SIZE = 99  # Maximum number of characters per line
 PAGE_SIZE = 5  # Number of lines per page
 
 DIALOG_BG = load_image('dialogwindow.png')
